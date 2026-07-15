@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Jost&display=swap');
+
+            body {
+                background-color: black;
+                color: white;
+                margin: 0;
+                padding: 0;
+                font-family: 'Jost', sans-serif;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+            }
+
+
+            form {
+                background-color: #02033e;
+                border-radius: 8px;
+                box-shadow: 14px 9px 10px rgba(255, 0, 0, 0.1);
+                padding: 40px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0px;
+                max-width: 450px;
+                margin-bottom: 35px;
+            }
+
+
+            label {
+                display: block;
+              
+                margin-bottom: 8px;
+            }
+
+            input {
+                width: 100%;
+                padding: 8px;
+                box-sizing: border-box;
+                margin-bottom: 16px;
+            }
+
+            button {
+                background-color: #4caf50;
+                color: #fff;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            
+            @media only screen and (max-width: 600px) {
+                .selectSongs,
+                .selectImages {
+                    margin-left: 10px;
+                    margin-right: 10px;
+                }
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <div class='selectSongs'>
+            <h2>Select Song and image File:</h2>
+            <form action="FileUploader" method="post" enctype="multipart/form-data">
+                <label for="songFile">Select Song File:</label>
+                <input type="file" name="songFile" accept="audio/*" multiple />
+                <br />
+                <label for="imageFile">Select Image File:</label>
+                <input type="file" name="imageFile" accept="image/*" multiple  />
+                <br />
+                <input type="submit" value="Upload both File" />
+            </form>
+        </div>
+    </body>
+
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Ganare : web player</title>
+        <link href="styles/index.css" rel="stylesheet" type="text/css"/>
+
+        <style>
+
+            @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100&family=Lemon&family=Salsa&display=swap');
+
+            @import url('https://fonts.googleapis.com/css2?family=Lemon&family=Salsa&display=swap');
+
+        </style>
+
+        <script>
+               function logoutMessage() {
+                alert('Dear User: You have successfully logged out !! ');
+                
+            }
+            
+               function loginFirst() {
+                alert('Dear User: Please Login First !! ');
+     
+            }
+
+
+            function showSingupMessage() {
+                alert('Dear User: Successfully Registered! Click OK to go to the login form.  ');
+                window.location.href = '#login';
+            }
+
+            function showUserMessage() {
+                alert('Dear User : Email or Password not matched!!  ');
+                window.location.href = '#login';
+            }
+        </script>
+
+    </head>
+
+    <body>
+
+
+        <header>
+
+            <img src="images/web_images/logoGanare.png" alt="Welcome Image" style="width: 10%;  margin-left: 0%; padding-top: 1%;">
+            <p> Where Melodies Reflect The Soul <p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#genres">Genres</a></li>
+                <li><a href="#artists">Artists</a></li>
+                <li><a href="#playlists">Playlists</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#login">Login/Sign Up</a></li>
+            </ul>
+        </nav>
+
+        <section id="featured">
+            <br>
+            <h2>Featured Music</h2>
+            <div class="featured-songs-container">
+                <div class="featured-song">
+                    <img src="./images/Songs_image/295.jpg" alt="song">
+                    <h3>295</h3>
+                    <p>Sidhu Moose Wala</p>
+                    <audio controls>
+                        <source src="songs/295.mp3" type="audio/mp3">
+                    </audio>
+                </div>
+
+                <div class="featured-song">
+                    <img src="./images/Songs_image/maharani.jpg" alt="Song">
+                    <h3>Maharani</h3>
+                    <p>Arpit Bala</p>
+                    <audio controls>
+                        <source src="songs/maharani.mp3" type="audio/mp3">
+                    </audio>
+                </div>
+                <div class="featured-song">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRImmQo-nI_OZR732tdqgOHxaaE9o-QNtNTFDV71lWHqryJ7jqBAvLDdBDvrZgm5VGHTO8&usqp=CAU" alt="song">
+                    <h3>Goat</h3>
+                    <p>Sidhu Moose Wala</p>
+                    <audio controls>
+                        <source src="songs/Goat.mp3" type="audio/mp3">
+                    </audio>
+                </div>
+
+                <div class="featured-song">
+                    <img src="./images/Songs_image/Nightmare.jpg" alt="Song">
+                    <h3>Nightmare</h3>
+                    <p>Chandra brar</p>
+                    <audio controls>
+                        <source src="songs/Nightmare.mp3" type="audio/mp3">
+                    </audio>
+                </div>
+                <div class="featured-song">
+                    <img src="https://c.saavncdn.com/836/Choudhar-Jaat-Ki-Lo-Fi-Haryanvi-2023-20230808074634-500x500.jpg" alt="song">
+                    <h3>Choudhar Jaat Ki</h3>
+                    <p>Raju Punjabi</p>
+                    <audio controls>
+                        <source src="https://pagalworld.cool/files/download/id/399"> type="audio/mp3">
+                    </audio>
+                </div>
+
+                <div class="featured-song">
+                    <img src="https://i1.sndcdn.com/artworks-KsQJuzBDxvYc-0-t500x500.jpg" alt="Song">
+                    <h3>Still Rolling</h3>
+                    <p>Shubh</p>
+                    <audio controls>
+                        <source src="https://cdnsongs.com/music/data/Punjabi/202305/Still_Rollin/128/Still_Rollin.mp3" type="audio/mp3">
+                    </audio>
+                </div>
+
+                <div class="featured-song">
+                    <img src="https://i.scdn.co/image/ab67616d0000b273b0669cfa801267f6cccfbd6d" alt="Song">
+                    <h3>Mi Amor</h3>
+                    <p>Sharn & The Pual</p>
+                    <audio controls>
+                        <source src="https://www.pagalworldl.com/files/download/id/17920" type="audio/mpeg">                  
+                    </audio>
+                </div>
+
+
+
+            </div>
+        </section>
+
+        <section id="genres">
+            <h2>Explore Genres</h2>
+            <a href="Genre" >Hip Hop</a><br>
+            <a href="Genre" >Classical</a><br>
+            <a href="Genre" >Pop</a><br>
+            <a href="Genre" >Rock</a><br>
+        </section>
+
+        <section id="artists">
+            <h2>Featured Artists</h2>
+            <a href="Aritist" >Diljit Dosanjh</a><br>
+            <a href="Aritist" >Arjit Singh</a><br>
+            <a href="Aritist" >Sidhu Moose Wala</a><br>
+            <a href="Aritist" >Vilen</a><br>
+        </section>
+
+        <section id="playlists">
+            <h2>Curated Playlists</h2>
+            <a href="Aritist" >Bollywood Mashup</a><br>
+            <a href="Aritist" >Haryanvi adda</a><br>
+        </section>
+
+        <section id="about">
+            <h2>About Us</h2>
+            <p>
+
+                At Gaanare, we believe in the transformative power of music. Our platform is more than just a place to listen;
+                it's a sanctuary for music lovers and enthusiasts alike. With a mission to bring the world of melodies closer to you, 
+                Gaanare is your go-to destination for discovering, enjoying, and sharing the rhythm of life.
+                <br>
+                Artist Spotlight:
+                Celebrate the artists who bring music to life. Our Artist Spotlight features delve into the stories behind the music,
+                providing a deeper understanding of the creative minds shaping the industry.
+                <br>
+                Accessible Anywhere, Anytime:
+                Whether you're at home, on the go, or exploring the world, Ganare is accessible anytime,
+                anywhere. Take your favorite tunes with you and let the music be your companion.
+                <br>
+                Join us at Ganare and be part of a harmonious journey through the world of music. 
+                Together, let's explore, experience, and embrace the extraordinary power of sound.
+                <br>
+                Feel the beat. Share the joy. Ganare - Where Music Lives.
+
+            </p>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Us</h2>
+
+            <a href="mailto:meshailesh003@gmail.com"> <img src="./images/others/email.png" alt="gmail" style="width: 50px; height: 50px;">
+            </a>
+            <a href="https://www.instagram.com/me_shailesh_003?igsh=OG8xc25lc3piZmJ0"> <img src="./images/others/instagram.png" alt="instagram" style="width: 50px; height: 50px; padding-left: 30px;"> </a>
+            <p>Phone: +91-00344334 </p>
+            <br>
+
+        </section>
+
+        <section id="login">
+            <h2>Login</h2>
+            <div class="container">
+                <div class="welcome-image">
+                    <img src="./images/others/loginImage.png" alt="Login logo" style="width: 100%;">
+                </div>
+
+                <div class="login-form">
+                    <h5>Get a personalised experience, and access all your music</h5>
+
+                    <form action="User_login" method="post">
+                        <label for="mail">Email :</label>
+                        <input type="email" id="mail" name="mail"  required>
+
+                        <label for="pwd">Password :</label>
+                        <input type="password" id="pwd" name="pwd"  required>
+                        <button type="submit">Login</button>
+                    </form> 
+
+                </div>
+
+            </div>
+            <div  style="margin-left: 20%;" ><h4 >
+                    <a style='color: red' href="forget_pwd.html">Forget Password?</a>    |   <a style='color: darkblue' href="user_signup.html">Registeration?</a>
+
+                </h4></div>
+
+            <br> 
+            <br> 
+            <br> 
+            <br> 
+            <br> 
+            <br> 
+
+        </section>
+
+        
+        <footer>
+            <p>&copy; 2024 Gaanare. All rights reserved.</p>
+
+        </footer>
+
+    </body>
+
+</html>

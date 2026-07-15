@@ -1,0 +1,171 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 16-Jan-2024, 8:18:10 pm
+    Author     : hp
+*/
+
+body{
+    background-color: black;
+    font-family: 'Jost', sans-serif;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar {
+    border-right-width: 3px;
+    border-right-style: solid;
+
+    border-color: red;
+    height: 100%;
+    width: 170px;
+    padding-left: 2%;
+    position: fixed;
+    background-color: #111;
+    padding-top: 40px;
+}
+
+.sidebar a {
+    padding: 16px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+}
+
+.sidebar a:hover {
+    background-color: #575757;
+}
+
+.content {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+
+.dynamic-content {
+    margin-left: 2%;
+}
+
+/*logout button css*/
+
+.logout-button {
+    padding-right: 10px;
+    
+    padding-left: 5px;
+    margin-top: 27px;
+}
+
+.logout-button form {
+    display: inline;
+}
+
+.logout-button input {
+    background-color: white;
+    border-radius: 0px;
+    color: black;
+    
+    padding: 5px;
+    width: 100px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'Jost', sans-serif;
+}
+
+.logout-button input:hover {
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+
+/*add song form css*/
+
+
+ .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 325px;
+    background-color: #140a5b;
+    padding: 10px 30px 30px 30px;
+    border-radius: 8px;
+    box-shadow: 1px 1px 10px rgba(244, 237, 237, 0.5);
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.container label,
+.container input,
+.container select,
+.container button {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+label,
+input,
+select {
+    width: 100%; 
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #096c7c;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: black;
+}
+
+
+@media (min-width: 600px) {
+    .container {
+        width: 60%;
+    }
+
+    label,
+    input,
+    select {
+        width: 100%;
+    }
+}
+
+
+table {
+     margin-left: 300px;
+    width: 75%; 
+    
+ 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

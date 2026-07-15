@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Admin Login</title>
+    
+    <script>
+
+            function showAdminMessage() {
+                alert('Dear Admin : Email or Password not matched!!  ');
+
+            }
+            function loginFirst() {
+                alert('Dear Admin : Please Login First !!  ');
+
+            }
+            function logoutMessage() {
+                alert('Dear Admin : You have successfully logged out !!  ');
+
+            }
+        </script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin-top: 10%;
+            padding: 0;
+/*            display: flex;
+            align-items: center;*/
+            height: 20vw;
+            background-color: #130444;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .welcome-image {
+            max-width: 40%;
+            height: auto;
+        }
+
+        .login-form {
+            width: 50%;
+            padding-left: 20px;
+        }
+
+        h3 {
+            font-family: Arial, sans-serif;
+            color: #007bff;
+        }
+
+        form {
+            max-width: 100%;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid black;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #010509;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #130444;
+            
+            a {
+                padding-top: 50%;
+                padding-left: 30%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="welcome-image">
+            <img src="./images/others/adminImage.png" alt="Admin" style="width: 100%;">
+        </div>
+
+        <div class="login-form">
+            <h4>Admin Login! </h4>
+            <form action="Admin_login" method="post">
+            <label for="mail">Email :</label>
+            <input type="email" id="mail" name="mail"  required>
+
+            <label for="pwd">Password :</label>
+            <input type="password" id="pwd" name="pwd"  required>
+            <button type="submit">Login</button>
+        </form>
+        </div>
+    </div>
+    
+</body>
+</html>

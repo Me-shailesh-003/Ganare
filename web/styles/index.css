@@ -1,0 +1,168 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 15-Jan-2024, 10:11:01 pm
+    Author     : hp
+*/
+
+body {
+  
+    font-family: 'Lemon', serif;
+    font-family: 'Salsa', cursive;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: blue;
+    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Lemon', serif;
+    font-family: 'Salsa', cursive;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    
+}
+
+
+nav {
+    background-color: #444;
+    color: #fff;
+    padding: 10px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+nav li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+section {
+    padding: 20px;
+}
+
+#featured {
+    
+    background-color: #eee;
+}
+
+.featured-songs-container {
+    margin-bottom: 20px;
+    max-width: 27%; 
+    margin-top: 50px;
+    margin-left: 0;
+    display: flex;
+ 
+}
+
+.featured-song {
+    margin: 0 2%; 
+    flex: 0 0 46%; 
+    justify-content: space-around; 
+}
+
+.featured-song img {
+    width: 100%; 
+    height: auto;
+}
+
+audio {
+    width: 100%;
+}
+
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+ /*login form css here*/ 
+
+.container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 800px;
+            margin-left: 3px;
+
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .welcome-image {
+            max-width: 40%;
+            height: auto;
+        }
+
+        .login-form {
+            width: 50%;
+            padding-left: 5px;
+        }
+
+        h3 {
+            font-family: Arial, sans-serif;
+            color: #007bff;
+        }
+
+        form {
+            max-width: 100%;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            
+            a {
+                padding-top: 50%;
+                padding-left: 30%;
+            }
+        }
+

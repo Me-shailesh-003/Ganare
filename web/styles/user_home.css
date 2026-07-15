@@ -1,0 +1,368 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 20-Jan-2024, 11:44:39 pm
+    Author     : hp
+*/
+
+ @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@500&display=swap');
+
+
+
+body {
+     font-family: 'Lexend', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: blue;
+    color: #fff;
+    padding: 6px;
+}
+
+.search-bar {
+    margin-left: 14px;
+    text-align: left;
+    margin-right: auto;
+    color: white;
+    font-size: 13px;
+
+}
+
+.search-bar form {
+    
+    display: flex;
+    gap: 4px;
+}
+
+
+
+.header-content {
+    text-align: center;
+
+    margin-right: 20%;
+
+}
+
+#search {
+    padding-left: 10px;
+    height: 17px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+button {
+    padding: 5px 10px;
+}
+
+.logout-button {
+    padding-right: 10px;
+    margin-top: 8px;
+}
+
+.logout-button form {
+    display: inline;
+}
+
+.logout-button input {
+    background-color: white;
+    border-radius: 21px;
+    color: black;
+     font-family: 'Lexend', sans-serif;
+    padding: 7px;
+    width: 79px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.logout-button input:hover {
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+
+
+
+
+nav {
+    background-color: #444;
+    color: #fff;
+    padding: 10px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+nav li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#featured {
+
+    margin-top: 20px;
+}
+
+.featured-song {
+    margin-bottom: 20px;
+}
+
+.featured-song img {
+    max-width: 100%;
+    height: auto;
+}
+
+table {
+
+    border-collapse: collapse;
+    width: 90%;
+}
+
+table, th, td {
+    border: 2px solid black;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: grey;
+}
+
+section {
+    padding: 20px;
+}
+
+.footerDesign{
+    background-color:grey;
+    color: black;
+    height: auto;
+    width: 100%;
+    margin-left: -20px;
+    margin-bottom: 80px;
+    padding: 70px;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+
+
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    left: 0;
+    right: 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding-bottom: 20px;
+    /*    margin: 0;*/
+}
+
+/*showing song div css here*/
+
+
+/*.show-songs {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .song-row {
+           background-color: #181818;
+           color: white;
+
+            padding: 43px;
+             border: 2px solid red;
+            margin: 50px;
+            width: 250px;
+            box-sizing: border-box;
+        }
+
+    .song-row:hover  {
+    background-color: red;
+    opacity: 0.8;
+    transform: scale(1.1);
+  
+}*/
+
+
+/*footer css*/
+
+
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f0f0f0;
+}
+
+.player-container {
+    width: 100%;
+}
+
+.player {
+    background-color: #000;
+    padding-bottom: 0px;
+    padding-top: 10px;
+    border-radius: 0px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    color: white;
+    margin-bottom: 10px;
+}
+
+.media-info {
+    margin-left: 55px;
+    display: flex;
+    align-items: center;
+    margin-bottom: -75px;
+}
+
+.music-image {
+    width: 75px;
+    height: auto;
+    padding-bottom: 10px;
+    border-radius: 0%;
+    margin-right: 30px;
+}
+
+.track-info {
+    flex-grow: 1;
+}
+
+.controls {
+    width: 350px;
+    margin-left: 590px;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 15px;
+}
+
+.progress-bar {
+    margin-left: 460px;
+    width: 38%;
+}
+
+
+/*  profile user image*/
+
+
+/* .user-profile {
+           background-color: #181818;
+           color: white;
+
+             border: 2px solid rgb(12, 1, 1);
+          
+            width: 32px;
+            box-sizing: border-box;
+            border-radius:50%;
+            background-size: cover;
+        }*/
+
+/*music box css here*/
+
+
+.spotifyPlaylists {
+    padding: 16px;
+}
+
+.spotifyPlaylists .card {
+    width: 200px;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #252525
+}
+
+.card {
+    position: relative;
+}
+
+.cardContainer {
+    display: flex;
+    gap: 80px;
+    margin: 30px;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    max-height: 100vh;
+}
+
+.card>* {
+    padding-top: 7px;
+}
+
+.card img {
+    width: 100%;
+    object-fit: contain;
+}
+
+.play {
+    position: absolute;
+    top: 200px;
+    right: 35px;
+    opacity: 0;
+    transition: all 1s ease-out;
+}
+
+.card:hover .play,
+.card:active .play {
+    opacity: 1;
+    top: 160px;
+}
+
+/*button css for create playlist*/
+
+.create-playlist-btn {
+    background-color: skyblue; /* Green background */
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.create-playlist-btn:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.create-playlist-btn img {
+    margin-right: 10px; /* Spacing between the image and text */
+}
+
+
+
+
