@@ -628,6 +628,16 @@
             transform: translateY(-4px);
         }
 
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary-text);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .sidebar {
@@ -635,7 +645,10 @@
                 padding: 16px;
             }
 
-            .logo-text,
+            .logo-container img {
+                display: none;
+            }
+
             .nav-links span {
                 display: none;
             }
@@ -652,7 +665,19 @@
 
         @media (max-width: 768px) {
             .sidebar {
-                display: none;
+                transform: translateX(-100%);
+                width: 250px;
+                position: fixed;
+                z-index: 1000;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .logo-container img,
+            .nav-links span {
+                display: inline-block;
             }
 
             .main-content {
@@ -660,21 +685,48 @@
                 padding: 16px;
             }
 
+            .mobile-menu-btn {
+                display: block;
+                margin-right: 16px;
+            }
+            
+            .top-header {
+                justify-content: flex-start;
+                padding: 15px;
+            }
+            
+            .search-container {
+                display: none; /* Hide complex search on small mobile for simplicity, or we can make it a toggle */
+            }
+
             .player-wrapper {
                 grid-template-columns: 1fr;
-                gap: 16px;
+                gap: 12px;
             }
 
             .player-extras {
                 justify-content: center;
             }
+            
+            .now-playing {
+                justify-content: center;
+            }
 
             .welcome-banner h1 {
-                font-size: 32px;
+                font-size: 24px;
+            }
+            
+            .welcome-banner {
+                padding: 30px 20px;
             }
 
             .card-grid {
                 grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
             }
         }
     </style>
@@ -723,6 +775,9 @@
     <main class="main-content">
         <!-- Top Header -->
         <header class="top-header">
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
             <div class="search-container">
                 <form action="search_filter.jsp" style="display: flex; gap: 12px; width: 100%;">
                     <select name="filter" class="search-select">
@@ -1178,13 +1233,20 @@
                     if (target) {
                         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         
-                        // Update active nav link
+                // Update active nav link
                         document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
                         this.classList.add('active');
+                        
+                        // Close mobile menu if open
+                        document.querySelector('.sidebar').classList.remove('active');
                     }
                 });
             });
         });
+
+        function toggleMobileMenu() {
+            document.querySelector('.sidebar').classList.toggle('active');
+        }
     </script>
 
     <%

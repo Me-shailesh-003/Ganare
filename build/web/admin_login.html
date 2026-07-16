@@ -3,122 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Admin Login</title>
+    <title>Gaanare - Admin Login</title>
     
     <script>
-
-            function showAdminMessage() {
-                alert('Dear Admin : Email or Password not matched!!  ');
-
-            }
-            function loginFirst() {
-                alert('Dear Admin : Please Login First !!  ');
-
-            }
-            function logoutMessage() {
-                alert('Dear Admin : You have successfully logged out !!  ');
-
-            }
-        </script>
+        function showAdminMessage() {
+            alert('Dear Admin : Email or Password not matched!!');
+        }
+        function loginFirst() {
+            alert('Dear Admin : Please Login First !!');
+        }
+        function logoutMessage() {
+            alert('Dear Admin : You have successfully logged out !!');
+        }
+    </script>
     
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin-top: 10%;
-            padding: 0;
-/*            display: flex;
-            align-items: center;*/
-            height: 20vw;
-            background-color: #130444;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary-bg: #121212;
+            --secondary-bg: #181818;
+            --card-bg: #282828;
+            --primary-text: #ffffff;
+            --secondary-text: #b3b3b3;
+            --accent-color: #1db954;
+            --border-color: #333;
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
         }
 
-        .container {
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-color: var(--primary-bg);
+            color: var(--primary-text);
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
+        }
+
+        .login-container {
+            display: flex;
+            flex-wrap: wrap;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin: 20px;
+            max-width: 900px;
+            width: 100%;
         }
 
         .welcome-image {
-            max-width: 40%;
+            flex: 1 1 400px;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .welcome-image img {
+            width: 100%;
             height: auto;
+            max-width: 300px;
+            object-fit: contain;
+            filter: drop-shadow(0px 4px 10px rgba(29, 185, 84, 0.3));
         }
 
         .login-form {
-            width: 50%;
-            padding-left: 20px;
+            flex: 1 1 400px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        h3 {
-            font-family: Arial, sans-serif;
-            color: #007bff;
+        .header-logo {
+            text-align: center;
+            margin-bottom: 20px;
         }
 
-        form {
-            max-width: 100%;
+        .header-logo img {
+            width: 120px;
         }
 
-        label {
+        .login-form h4 {
+            font-size: 24px;
+            color: var(--primary-text);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .login-form label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--secondary-text);
             display: block;
-            margin-top: 10px;
         }
 
-        input {
+        .login-form input {
             width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            border: 1px solid black;
-            border-radius: 4px;
+            padding: 14px;
+            margin-bottom: 20px;
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--primary-text);
+            font-size: 16px;
+            transition: border-color 0.3s ease;
             box-sizing: border-box;
         }
 
-        button {
-            background-color: #010509;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
+        .login-form input:focus {
+            outline: none;
+            border-color: var(--accent-color);
         }
 
-        button:hover {
-            background-color: #130444;
-            
-            a {
-                padding-top: 50%;
-                padding-left: 30%;
+        .login-form button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #1db954, #1ed760);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .login-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(29, 185, 84, 0.4);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .login-container {
+                margin: 15px;
+                flex-direction: column;
+            }
+            .welcome-image {
+                padding: 30px;
+            }
+            .welcome-image img {
+                max-width: 200px;
+            }
+            .login-form {
+                padding: 30px 20px;
             }
         }
     </style>
 </head>
 <body>
-
-    <div class="container">
+    <div class="login-container">
         <div class="welcome-image">
-            <img src="./images/others/adminImage.png" alt="Admin" style="width: 100%;">
+            <img src="./images/others/adminImage.png" alt="Admin">
         </div>
 
         <div class="login-form">
-            <h4>Admin Login! </h4>
+            <div class="header-logo">
+                <a href="index.html">
+                    <img src="./images/web_images/logoGanare.png" alt="Gaanare Logo">
+                </a>
+            </div>
+            <h4>Admin Login</h4>
             <form action="Admin_login" method="post">
-            <label for="mail">Email :</label>
-            <input type="email" id="mail" name="mail"  required>
+                <label for="mail">Email Address</label>
+                <input type="email" id="mail" name="mail" placeholder="Enter admin email" required>
 
-            <label for="pwd">Password :</label>
-            <input type="password" id="pwd" name="pwd"  required>
-            <button type="submit">Login</button>
-        </form>
+                <label for="pwd">Password</label>
+                <input type="password" id="pwd" name="pwd" placeholder="Enter admin password" required>
+                
+                <button type="submit">Secure Login</button>
+            </form>
         </div>
     </div>
-    
 </body>
 </html>

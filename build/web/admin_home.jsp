@@ -419,7 +419,13 @@
 
             @media (max-width: 768px) {
                 .sidebar {
-                    display: none;
+                    transform: translateX(-100%);
+                    width: 260px;
+                    display: block; /* Overrides display: none */
+                }
+                
+                .sidebar.mobile-active {
+                    transform: translateX(0);
                 }
 
                 .main-content {
@@ -432,7 +438,11 @@
                 }
 
                 table {
-                    font-size: 12px;
+                    font-size: 13px;
+                    display: block;
+                    overflow-x: auto;
+                    white-space: nowrap;
+                    width: 100%;
                 }
 
                 table th,

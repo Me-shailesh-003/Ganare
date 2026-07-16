@@ -18,21 +18,21 @@
     </script>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
         :root {
-            --primary-bg: #121212;
-            --secondary-bg: #181818;
-            --card-bg: #282828;
+            --primary-bg: #09090b;
             --primary-text: #ffffff;
-            --secondary-text: #b3b3b3;
-            --accent-color: #1db954;
-            --border-color: #333;
-            --shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            --secondary-text: #a1a1aa;
+            --accent-glow: rgba(59, 130, 246, 0.6); /* Blue accent for admin */
+            --accent-glow-secondary: rgba(139, 92, 246, 0.6);
+            --accent-color: #3b82f6;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', sans-serif;
             margin: 0;
             padding: 0;
             min-height: 100vh;
@@ -41,64 +41,125 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: 
+                radial-gradient(circle at 80% 20%, var(--accent-glow) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, var(--accent-glow-secondary) 0%, transparent 50%);
+            z-index: -1;
+            filter: blur(80px);
+            animation: gradientMove 15s ease-in-out infinite alternate;
+        }
+
+        @keyframes gradientMove {
+            0% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.2) translate(-5%, 5%); }
+            100% { transform: scale(1) translate(5%, -5%); }
         }
 
         .login-container {
             display: flex;
             flex-wrap: wrap;
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
             margin: 20px;
             max-width: 900px;
             width: 100%;
+            position: relative;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(transparent, rgba(59, 130, 246, 0.4), transparent 30%);
+            animation: rotate 6s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(1turn); }
+        }
+
+        .login-inner {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            background: var(--primary-bg);
+            border-radius: 18px;
+            margin: 2px;
+            overflow: hidden;
         }
 
         .welcome-image {
             flex: 1 1 400px;
-            background: #000;
+            background: linear-gradient(135deg, #09090b, #1a1a2e);
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 40px;
+            position: relative;
+        }
+
+        .welcome-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80') center/cover;
+            opacity: 0.3;
+            mix-blend-mode: overlay;
         }
 
         .welcome-image img {
             width: 100%;
-            height: auto;
-            max-width: 300px;
-            object-fit: contain;
-            filter: drop-shadow(0px 4px 10px rgba(29, 185, 84, 0.3));
+            max-width: 250px;
+            position: relative;
+            z-index: 10;
+            filter: drop-shadow(0px 10px 20px rgba(59, 130, 246, 0.5));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
         }
 
         .login-form {
             flex: 1 1 400px;
-            padding: 40px;
+            padding: 50px 40px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
         }
 
         .header-logo {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .header-logo img {
             width: 120px;
+            filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.5));
         }
 
         .login-form h4 {
-            font-size: 24px;
-            color: var(--primary-text);
-            margin-bottom: 25px;
+            font-size: 28px;
+            color: #fff;
+            margin-bottom: 30px;
             text-align: center;
+            font-weight: 800;
+            letter-spacing: -1px;
         }
 
         .login-form label {
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 500;
             margin-bottom: 8px;
             color: var(--secondary-text);
             display: block;
@@ -106,80 +167,83 @@
 
         .login-form input {
             width: 100%;
-            padding: 14px;
-            margin-bottom: 20px;
-            background-color: var(--secondary-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--primary-text);
+            padding: 16px;
+            margin-bottom: 24px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: #fff;
             font-size: 16px;
-            transition: border-color 0.3s ease;
+            font-family: inherit;
+            transition: all 0.3s ease;
             box-sizing: border-box;
         }
 
         .login-form input:focus {
             outline: none;
             border-color: var(--accent-color);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+            background-color: rgba(0, 0, 0, 0.8);
         }
 
         .login-form button {
             width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #1db954, #1ed760);
+            padding: 16px;
+            background: linear-gradient(135deg, var(--accent-color), #2563eb);
             color: #fff;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 700;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: inherit;
+            margin-top: 10px;
         }
 
         .login-form button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(29, 185, 84, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.5);
         }
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .login-container {
                 margin: 15px;
-                flex-direction: column;
             }
             .welcome-image {
-                padding: 30px;
-            }
-            .welcome-image img {
-                max-width: 200px;
+                display: none; /* Admin likely doesn't need the image on mobile */
             }
             .login-form {
-                padding: 30px 20px;
+                padding: 40px 25px;
             }
         }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <div class="welcome-image">
-            <img src="./images/others/adminImage.png" alt="Admin">
-        </div>
-
-        <div class="login-form">
-            <div class="header-logo">
-                <a href="index.html">
-                    <img src="./images/web_images/logoGanare.png" alt="Gaanare Logo">
-                </a>
+        <div class="login-inner">
+            <div class="welcome-image">
+                <img src="./images/others/adminImage.png" alt="Admin Dashboard">
             </div>
-            <h4>Admin Login</h4>
-            <form action="Admin_login" method="post">
-                <label for="mail">Email Address</label>
-                <input type="email" id="mail" name="mail" placeholder="Enter admin email" required>
 
-                <label for="pwd">Password</label>
-                <input type="password" id="pwd" name="pwd" placeholder="Enter admin password" required>
-                
-                <button type="submit">Secure Login</button>
-            </form>
+            <div class="login-form">
+                <div class="header-logo">
+                    <a href="index.html">
+                        <img src="./images/web_images/logoGanare.png" alt="Gaanare Logo">
+                    </a>
+                </div>
+                <h4>Admin Login</h4>
+                <form action="Admin_login" method="post">
+                    <label for="mail">Email Address</label>
+                    <input type="email" id="mail" name="mail" placeholder="Enter admin email" required>
+
+                    <label for="pwd">Password</label>
+                    <input type="password" id="pwd" name="pwd" placeholder="Enter admin password" required>
+                    
+                    <button type="submit">Secure Login</button>
+                </form>
+            </div>
         </div>
     </div>
 </body>

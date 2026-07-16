@@ -123,6 +123,13 @@
             }
 
 
+        
+            @media (max-width: 768px) {
+                .container, .form-container, .main-container { width: 95% !important; padding: 15px !important; margin: 10px auto !important; box-sizing: border-box; }
+                table { display: block; overflow-x: auto; white-space: nowrap; width: 100%; font-size: 14px; }
+                input[type='text'], input[type='email'], input[type='password'], input[type='file'], select { width: 100% !important; box-sizing: border-box; }
+                .music-player { flex-direction: column !important; padding: 10px !important; height: auto !important; }
+            }
         </style>
     </head>
     <body>
@@ -176,3 +183,4 @@
 
                         </body>
                         </html>
+

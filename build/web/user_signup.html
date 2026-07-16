@@ -1,171 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>User Login</title>
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@500&display=swap');
-        </style>
-        <style>
-            body {
-                font-family: 'Lexend', sans-serif;
-                margin: 0;
-                padding: 0;
-                height: 100vh;
-                background-color: #130444;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaanare - Create Account</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
+        :root {
+            --primary-bg: #121212;
+            --secondary-bg: #181818;
+            --card-bg: #282828;
+            --primary-text: #ffffff;
+            --secondary-text: #b3b3b3;
+            --accent-color: #1db954;
+            --accent-hover: #1ed760;
+            --border-color: #333;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-color: var(--primary-bg);
+            color: var(--primary-text);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header-logo {
+            text-align: center;
+            margin-bottom: 30px;
+            margin-top: 40px;
+        }
+
+        .header-logo img {
+            width: 150px;
+            filter: drop-shadow(0px 4px 10px rgba(29, 185, 84, 0.4));
+        }
+
+        .header-logo p {
+            color: var(--secondary-text);
+            margin-top: 10px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 600px;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        h4 {
+            text-align: center;
+            color: var(--secondary-text);
+            font-weight: 400;
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Span full width for specific inputs on desktop */
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--secondary-text);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--primary-text);
+            font-size: 15px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        button {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, var(--accent-color), #1ed760);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(29, 185, 84, 0.4);
+        }
+
+        .back-login {
+            text-align: center;
+            margin-top: 25px;
+            grid-column: 1 / -1;
+        }
+
+        .back-login a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .back-login a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 600px) {
             .container {
-                max-width: 1100px;
-                width: 50%;
-                margin-left: 8%;
-                background-color: white;
-                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-                border-radius: 10px;
-                overflow: hidden;
-                padding: 20px;
+                padding: 25px 20px;
+                border-radius: 0;
+                box-shadow: none;
             }
-
-            .form-content {
-                display: flex;
-                flex-wrap: wrap;
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
             }
-
-            .form-left,
-            .form-right {
-                flex: 5;
-                box-sizing: border-box;
-                padding:5px;
+            .form-group.full-width {
+                grid-column: auto;
             }
-            
-            .form-right {
-                padding-left:80px;
+            button, .back-login {
+                grid-column: auto;
             }
-            
+        }
+    </style>
+</head>
+<body>
 
-            form {
-                max-width: 100%;
-                display: flex;
-                flex-wrap: wrap;
-                margin-left: 129px;
-            }
+    <div class="header-logo">
+        <a href="index.html">
+            <img src="./images/web_images/logoGanare.png" alt="Gaanare Logo">
+        </a>
+        <p>Where Melodies Reflect The Soul</p>
+    </div>
 
-            label {
-                display: block;
-                margin-top: 10px;
-            }
+    <div class="container">
+        <h2>Create an Account</h2>
+        <h4>Join our community and explore unlimited music!</h4>
 
-            input, select {
-                width: calc(125% - 20px);
-                padding: 10px;
-                margin-top: 5px;
-                margin-bottom: 15px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                box-sizing: border-box;
-            }
-
-            h4 {
-                font-family: 'Lexend', sans-serif;
-                padding-top: 2px;
-                text-align: center;
-                font-size: 15px;
-                color: rgb(11, 1, 1);
-            }
-
-            button {
-                background-color: #040e1a;
-                color: white;
-                padding: 10px;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                width: 100%;
-                font-size: 16px;
-            }
-
-            button:hover {
-                background-color: #130444;
-            }
-
-            .imglogo {
-                text-align: center;
-                margin-top: 40%;
-                margin-left: -62%;
-            }
-
-            img {
-                width: 13%;
-                height: auto;
-            }
-
-            p {
-                color: white;
-                margin-top: 10px;
-            }
-
-
-        </style>
-    </head>
-    <body>
-
-        <div class="container">
-            <h4> Welcome to our community! Please fill out the following details to create your account. </h4>
-
-            <div class="form-content">
-                <form action="Registration" method="post">
-                    <div class="form-left">
-
-
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" name="name" required>
-
-                        <label for="mail">Email:</label>
-                        <input type="email" id="mail" name="mail" required>
-
-                        <label for="pwd">Password:</label>
-                        <input type="password" id="pwd" name="pwd" required>
-
-                        <label for="mob">Phone Number:</label>
-                        <input type="text" id="mob" name="mob" required>
-
-                    </div>
-
-                    <div class="form-right">
-
-                        <label for="lang">Preferred Language:</label>
-                        <select id="lang" name="lang" required>
-                            <option value="hindi">Hindi</option>
-                            <option value="english">English</option>
-                        </select>
-
-                        <label for="gender">Gender:</label>
-                        <select id="gender" name="gender" required>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
-                        </select>
-
-                        <label for="age">Age:</label>
-                        <input type="number" id="age" name="age" required>
-                        
-                    </div>
-                    <button type="submit">Register</button>
-                </form>
+        <form action="Registration" method="post" class="form-grid">
+            <div class="form-group full-width">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
             </div>
 
+            <div class="form-group full-width">
+                <label for="mail">Email Address</label>
+                <input type="email" id="mail" name="mail" placeholder="Enter your email address" required>
+            </div>
 
-        </div>
+            <div class="form-group full-width">
+                <label for="pwd">Password</label>
+                <input type="password" id="pwd" name="pwd" placeholder="Create a strong password" required>
+            </div>
 
+            <div class="form-group">
+                <label for="mob">Phone Number</label>
+                <input type="text" id="mob" name="mob" placeholder="Your phone number" required>
+            </div>
 
-        <div class="imglogo">
-            <img src="./images/web_images/logoGanare.png" alt="Welcome Image" >
-            <p> Where Melodies Reflect The Soul <p>
-        </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" placeholder="Your age" required>
+            </div>
 
-    </body>
+            <div class="form-group">
+                <label for="lang">Preferred Language</label>
+                <select id="lang" name="lang" required>
+                    <option value="hindi">Hindi</option>
+                    <option value="english">English</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <button type="submit">Sign Up</button>
+
+            <div class="back-login">
+                Already have an account? <a href="index.html#login">Log in here</a>
+            </div>
+        </form>
+    </div>
+
+</body>
 </html>

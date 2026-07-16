@@ -64,7 +64,7 @@
             <br>
             <h2>Featured Music</h2>
             <div class="featured-songs-container">
-                <div class="featured-song">
+                <div class="featured-song glass-panel">
                     <img src="./images/Songs_image/295.jpg" alt="song">
                     <h3>295</h3>
                     <p>Sidhu Moose Wala</p>
@@ -73,7 +73,7 @@
                     </audio>
                 </div>
 
-                <div class="featured-song">
+                <div class="featured-song glass-panel">
                     <img src="./images/Songs_image/maharani.jpg" alt="Song">
                     <h3>Maharani</h3>
                     <p>Arpit Bala</p>
@@ -81,7 +81,7 @@
                         <source src="songs/maharani.mp3" type="audio/mp3">
                     </audio>
                 </div>
-                <div class="featured-song">
+                <div class="featured-song glass-panel">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRImmQo-nI_OZR732tdqgOHxaaE9o-QNtNTFDV71lWHqryJ7jqBAvLDdBDvrZgm5VGHTO8&usqp=CAU" alt="song">
                     <h3>Goat</h3>
                     <p>Sidhu Moose Wala</p>
@@ -190,26 +190,28 @@
         <section id="login">
             <h2>Login to Gaanare</h2>
             <div class="login-container">
-                <div class="welcome-image">
-                    <img src="./images/others/loginImage.png" alt="Login logo">
-                </div>
+                <div class="login-inner">
+                    <div class="welcome-image">
+                        <img src="./images/others/loginImage.png" alt="Login logo">
+                    </div>
 
-                <div class="login-form">
-                    <h5>Get a personalised experience, and access all your music</h5>
-                    <form action="User_login" method="post">
-                        <label for="mail">Email</label>
-                        <input type="email" id="mail" name="mail" placeholder="Enter your email" required>
+                    <div class="login-form">
+                        <h5>Get a personalised experience, and access all your music</h5>
+                        <form action="User_login" method="post">
+                            <label for="mail">Email</label>
+                            <input type="email" id="mail" name="mail" placeholder="Enter your email" required>
 
-                        <label for="pwd">Password</label>
-                        <input type="password" id="pwd" name="pwd" placeholder="Enter your password" required>
+                            <label for="pwd">Password</label>
+                            <input type="password" id="pwd" name="pwd" placeholder="Enter your password" required>
+                            
+                            <button type="submit">Log In</button>
+                        </form> 
                         
-                        <button type="submit">Log In</button>
-                    </form> 
-                    
-                    <div class="auth-links">
-                        <a href="forget_pwd.html">Forgot Password?</a>
-                        <span style="color: var(--border-color); margin: 0 10px;">|</span>
-                        <a href="user_signup.html" style="color: var(--accent-color); font-weight: 600;">Create an Account</a>
+                        <div class="auth-links">
+                            <a href="forget_pwd.html">Forgot Password?</a>
+                            <span style="color: var(--border-color); margin: 0 10px;">|</span>
+                            <a href="user_signup.html" style="color: var(--accent-color); font-weight: 600;">Create an Account</a>
+                        </div>
                     </div>
                 </div>
             </div>
