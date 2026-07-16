@@ -1,5 +1,5 @@
 # Build Stage
-FROM openjdk:11-jdk-slim AS build
+FROM eclipse-temurin:11-jdk-focal AS build
 
 # Install curl
 RUN apt-get update && apt-get install -y curl findutils zip
@@ -31,7 +31,7 @@ WORKDIR /app/web
 RUN zip -r /app/ROOT.war *
 
 # Run Stage
-FROM tomcat:9-jre11-slim
+FROM tomcat:9
 # Remove default Tomcat apps
 RUN rm -rf /usr/local/tomcat/webapps/*
 
