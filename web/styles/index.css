@@ -1,168 +1,334 @@
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
-*/
-/* 
-    Created on : 15-Jan-2024, 10:11:01 pm
-    Author     : hp
-*/
+/* Premium Mobile-Friendly UI */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-body {
-  
-    font-family: 'Lemon', serif;
-    font-family: 'Salsa', cursive;
+:root {
+    --primary-bg: #121212;
+    --secondary-bg: #181818;
+    --card-bg: #282828;
+    --hover-bg: #3e3e3e;
+    --primary-text: #ffffff;
+    --secondary-text: #b3b3b3;
+    --accent-color: #1db954;
+    --accent-hover: #1ed760;
+    --border-color: #333;
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+* {
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+    line-height: 1.6;
+    overflow-x: hidden;
 }
 
 header {
-    background-color: blue;
-    font-family: 'Josefin Sans', sans-serif;
-    font-family: 'Lemon', serif;
-    font-family: 'Salsa', cursive;
-    color: #fff;
+    background: linear-gradient(to bottom, #0a0a0a, var(--primary-bg));
     text-align: center;
-    padding: 20px;
-    
+    padding: 40px 20px;
+    border-bottom: 1px solid var(--border-color);
 }
 
+header img {
+    max-width: 150px;
+    margin-bottom: 15px;
+    filter: drop-shadow(0px 4px 10px rgba(29, 185, 84, 0.5));
+}
+
+header p {
+    color: var(--secondary-text);
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
 
 nav {
-    background-color: #444;
-    color: #fff;
-    padding: 10px;
+    background-color: var(--secondary-bg);
+    padding: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 nav ul {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
-
-nav li {
-    display: inline;
-    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 nav a {
     text-decoration: none;
-    color: #fff;
-    font-weight: bold;
-    font-size: 16px;
+    color: var(--secondary-text);
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+nav a:hover {
+    color: var(--primary-text);
+    background-color: var(--hover-bg);
 }
 
 section {
-    padding: 20px;
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-#featured {
-    
-    background-color: #eee;
+h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    text-align: center;
+    background: linear-gradient(135deg, var(--accent-color), #1ed760);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
+/* Featured Music */
 .featured-songs-container {
-    margin-bottom: 20px;
-    max-width: 27%; 
-    margin-top: 50px;
-    margin-left: 0;
-    display: flex;
- 
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
 }
 
 .featured-song {
-    margin: 0 2%; 
-    flex: 0 0 46%; 
-    justify-content: space-around; 
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.featured-song:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
 }
 
 .featured-song img {
-    width: 100%; 
-    height: auto;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.featured-song h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: var(--primary-text);
+}
+
+.featured-song p {
+    font-size: 14px;
+    color: var(--secondary-text);
+    margin-bottom: 15px;
 }
 
 audio {
     width: 100%;
+    height: 40px;
+    outline: none;
+    border-radius: 20px;
+}
+audio::-webkit-media-controls-panel {
+    background-color: var(--hover-bg);
+}
+audio::-webkit-media-controls-play-button {
+    background-color: var(--accent-color);
+    border-radius: 50%;
 }
 
-
-footer {
-    background-color: #333;
-    color: #fff;
+/* Common Grids for Genres, Artists, Playlists */
+#genres, #artists, #playlists {
     text-align: center;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
 }
 
- /*login form css here*/ 
+#genres a, #artists a, #playlists a {
+    display: inline-block;
+    padding: 12px 24px;
+    margin: 8px;
+    background-color: var(--card-bg);
+    color: var(--primary-text);
+    text-decoration: none;
+    border-radius: 24px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+}
 
-.container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 800px;
-            margin-left: 3px;
+#genres a:hover, #artists a:hover, #playlists a:hover {
+    background-color: var(--accent-color);
+    border-color: var(--accent-hover);
+    transform: scale(1.05);
+}
 
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
+/* About Section */
+#about p {
+    color: var(--secondary-text);
+    line-height: 1.8;
+    font-size: 16px;
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
 
-        .welcome-image {
-            max-width: 40%;
-            height: auto;
-        }
+/* Contact Section */
+#contact {
+    text-align: center;
+}
 
-        .login-form {
-            width: 50%;
-            padding-left: 5px;
-        }
+#contact a img {
+    transition: transform 0.3s ease;
+}
 
-        h3 {
-            font-family: Arial, sans-serif;
-            color: #007bff;
-        }
+#contact a:hover img {
+    transform: scale(1.1);
+}
 
-        form {
-            max-width: 100%;
-        }
+/* Login Form */
+.login-container {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin: 0 auto;
+    max-width: 900px;
+}
 
-        label {
-            display: block;
-            margin-top: 10px;
-        }
+.welcome-image {
+    flex: 1 1 400px;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
+.welcome-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+}
 
-        button {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-        }
+.login-form {
+    flex: 1 1 400px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
-        button:hover {
-            background-color: #0056b3;
-            
-            a {
-                padding-top: 50%;
-                padding-left: 30%;
-            }
-        }
+.login-form h5 {
+    font-size: 16px;
+    color: var(--secondary-text);
+    margin-bottom: 25px;
+    text-align: center;
+}
 
+.login-form label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--secondary-text);
+}
+
+.login-form input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 20px;
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--primary-text);
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.login-form input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.login-form button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--accent-color), #1ed760);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(29, 185, 84, 0.4);
+}
+
+.auth-links {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.auth-links a {
+    color: var(--secondary-text);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.auth-links a:hover {
+    color: var(--accent-color);
+}
+
+/* Footer */
+footer {
+    background-color: var(--secondary-bg);
+    padding: 20px;
+    text-align: center;
+    color: var(--secondary-text);
+    font-size: 14px;
+    border-top: 1px solid var(--border-color);
+    margin-top: 40px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+    nav a {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+    }
+    .featured-songs-container {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+    }
+    section {
+        padding: 40px 15px;
+    }
+    .login-form {
+        padding: 25px;
+    }
+}
