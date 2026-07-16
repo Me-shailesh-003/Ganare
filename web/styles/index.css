@@ -145,7 +145,8 @@ h2 {
 /* Featured Music Grid */
 .featured-songs-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 250px));
+    justify-content: center;
     gap: 30px;
 }
 
@@ -257,15 +258,19 @@ audio::-webkit-media-controls-play-button {
     text-align: center;
 }
 
-#contact a img {
-    width: 60px !important;
-    height: 60px !important;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    filter: drop-shadow(0px 5px 15px rgba(0,0,0,0.3));
+.contact-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-top: 20px;
 }
-
-#contact a:hover img {
-    transform: scale(1.15) rotate(5deg);
+.contact-icons a {
+    color: var(--accent-color);
+    font-size: 32px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
 }
 
 /* Login Form */
@@ -418,13 +423,16 @@ footer {
 /* Responsive */
 @media (max-width: 768px) {
     nav {
-        margin: -20px 10px 0;
+        margin: 10px;
         padding: 10px;
+        position: relative;
+        z-index: 10;
     }
     nav ul {
         flex-direction: row;
-        overflow-x: auto;
-        justify-content: flex-start;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
         padding-bottom: 5px;
     }
     nav ul::-webkit-scrollbar {
@@ -436,7 +444,8 @@ footer {
         padding: 8px 16px;
     }
     .featured-songs-container {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(150px, 200px));
+        justify-content: center;
         gap: 15px;
     }
     .featured-song h3 { font-size: 18px; }

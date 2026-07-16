@@ -178,20 +178,29 @@
 
         .search-container {
             flex: 1;
-            max-width: 600px;
+            max-width: 500px;
+            margin: 0 24px;
+        }
+
+        .search-container form {
             display: flex;
+            align-items: center;
             gap: 12px;
+            width: 100%;
+        }
+
+        .search-select, .search-input {
+            padding: 10px 16px;
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            background: rgba(0, 0, 0, 0.4);
+            color: var(--primary-text);
+            font-family: inherit;
+            height: 44px; /* Ensure uniform height */
+            box-sizing: border-box;
         }
 
         .search-select {
-            padding: 12px 16px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--primary-text);
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
         }
 
         .search-select:hover {
@@ -347,12 +356,13 @@
         /* Card Grid */
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 220px));
+            justify-content: start;
             gap: 24px;
             margin-bottom: 64px;
         }
 
-        .card {
+        .music-card {
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -363,9 +373,11 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            display: block; /* Ensure it behaves correctly as a flex/grid child */
+            text-decoration: none;
         }
 
-        .card::before {
+        .music-card::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -378,29 +390,34 @@
             pointer-events: none;
         }
 
-        .card:hover {
+        .music-card:hover {
             background: rgba(255, 255, 255, 0.08);
             transform: translateY(-8px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
         }
 
-        .card-img-wrapper {
+        .card-image-container {
             position: relative;
+            width: 100%;
+            padding-bottom: 100%; /* Maintain 1:1 aspect ratio */
             margin-bottom: 16px;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
-        .card-img {
+        .card-image {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            aspect-ratio: 1;
+            height: 100%;
             object-fit: cover;
             border-radius: 8px;
             transition: transform 0.5s ease;
         }
 
-        .card:hover .card-img {
+        .music-card:hover .card-image {
             transform: scale(1.05);
         }
 
@@ -421,7 +438,7 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
         }
 
-        .card:hover .play-overlay {
+        .music-card:hover .play-overlay {
             opacity: 1;
             transform: translateY(0);
         }
@@ -478,7 +495,7 @@
         }
 
         /* Music Player */
-        .player-bar {
+        .music-player {
             position: fixed;
             bottom: 0;
             left: 0;
