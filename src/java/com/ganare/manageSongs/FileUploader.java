@@ -21,8 +21,15 @@ public class FileUploader extends HttpServlet {
 
         int maxFileSize = 17000 * 1024; 
         int maxMemSize = 17000 * 1024; 
-        String audioFilePath = "D:" + File.separator + "Universal Web Project" + File.separator + "Ganare" + File.separator + "web" + File.separator + "songs";
-        String imageFilePath = "D:" + File.separator + "Universal Web Project" + File.separator + "Ganare" + File.separator + "web" + File.separator + "images"+ File.separator + "Songs_image";
+        String appPath = request.getServletContext().getRealPath("");
+        String audioFilePath = appPath + File.separator + "songs";
+        String imageFilePath = appPath + File.separator + "images" + File.separator + "Songs_image";
+        
+        File audioDir = new File(audioFilePath);
+        if (!audioDir.exists()) audioDir.mkdirs();
+        
+        File imageDir = new File(imageFilePath);
+        if (!imageDir.exists()) imageDir.mkdirs();
 
         String contentType = request.getContentType();
 
