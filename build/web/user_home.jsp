@@ -816,7 +816,7 @@
                     boolean hasPlaylists = false;
                     try {
                         Class.forName("com.mysql.cj.jdbc.Driver");
-                        Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gana_bajao", "shailesh", "");
+                        String dbUrl = System.getenv("DB_URL") != null ? System.getenv("DB_URL") : "jdbc:mysql://localhost:3306/gana_bajao"; String dbUser = System.getenv("DB_USER") != null ? System.getenv("DB_USER") : "shailesh"; String dbPass = System.getenv("DB_PASS") != null ? System.getenv("DB_PASS") : ""; Connection cn = DriverManager.getConnection(dbUrl, dbUser, dbPass);
                         String query = "SELECT playlist_id, name, image FROM artist_playlists";
                         PreparedStatement ps = cn.prepareStatement(query);
                         ResultSet rs = ps.executeQuery();
@@ -875,7 +875,7 @@
                             out.println("<p style='grid-column: 1/-1; color: var(--secondary-text); text-align: center;'>User ID not found in session. Please log in again.</p>");
                         } else {
                             Class.forName("com.mysql.cj.jdbc.Driver");
-                            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gana_bajao", "shailesh", "");
+                            String dbUrl = System.getenv("DB_URL") != null ? System.getenv("DB_URL") : "jdbc:mysql://localhost:3306/gana_bajao"; String dbUser = System.getenv("DB_USER") != null ? System.getenv("DB_USER") : "shailesh"; String dbPass = System.getenv("DB_PASS") != null ? System.getenv("DB_PASS") : ""; Connection cn = DriverManager.getConnection(dbUrl, dbUser, dbPass);
                             String query = "SELECT playlist_id, name FROM user_playlists WHERE id = ?";
                             PreparedStatement ps = cn.prepareStatement(query);
                             ps.setString(1, userId);

@@ -652,7 +652,7 @@
                     <%
                         try {
                             Class.forName("com.mysql.cj.jdbc.Driver");
-                            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gana_bajao", "shailesh", "");
+                            String dbUrl = System.getenv("DB_URL") != null ? System.getenv("DB_URL") : "jdbc:mysql://localhost:3306/gana_bajao"; String dbUser = System.getenv("DB_USER") != null ? System.getenv("DB_USER") : "shailesh"; String dbPass = System.getenv("DB_PASS") != null ? System.getenv("DB_PASS") : ""; Connection cn = DriverManager.getConnection(dbUrl, dbUser, dbPass);
                             Statement smt = cn.createStatement();
                             ResultSet rs = smt.executeQuery("select * from song");
                             out.println("<table>");
@@ -700,7 +700,7 @@
                     <%
                         try {
                             Class.forName("com.mysql.cj.jdbc.Driver");
-                            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gana_bajao", "shailesh", "");
+                            String dbUrl = System.getenv("DB_URL") != null ? System.getenv("DB_URL") : "jdbc:mysql://localhost:3306/gana_bajao"; String dbUser = System.getenv("DB_USER") != null ? System.getenv("DB_USER") : "shailesh"; String dbPass = System.getenv("DB_PASS") != null ? System.getenv("DB_PASS") : ""; Connection cn = DriverManager.getConnection(dbUrl, dbUser, dbPass);
                             Statement smt = cn.createStatement();
                             ResultSet rs = smt.executeQuery("select * from song");
                             out.println("<table>");
@@ -769,7 +769,7 @@
                     <%
                         try {
                             Class.forName("com.mysql.cj.jdbc.Driver");
-                            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gana_bajao", "shailesh", "");
+                            String dbUrl = System.getenv("DB_URL") != null ? System.getenv("DB_URL") : "jdbc:mysql://localhost:3306/gana_bajao"; String dbUser = System.getenv("DB_USER") != null ? System.getenv("DB_USER") : "shailesh"; String dbPass = System.getenv("DB_PASS") != null ? System.getenv("DB_PASS") : ""; Connection cn = DriverManager.getConnection(dbUrl, dbUser, dbPass);
                             Statement smt = cn.createStatement();
                             ResultSet rs = smt.executeQuery("select * from artist_playlists");
                             out.println("<table>");
@@ -805,7 +805,7 @@
                     <%
                         try {
                             Class.forName("com.mysql.cj.jdbc.Driver");
-                            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gana_bajao", "shailesh", "");
+                            String dbUrl = System.getenv("DB_URL") != null ? System.getenv("DB_URL") : "jdbc:mysql://localhost:3306/gana_bajao"; String dbUser = System.getenv("DB_USER") != null ? System.getenv("DB_USER") : "shailesh"; String dbPass = System.getenv("DB_PASS") != null ? System.getenv("DB_PASS") : ""; Connection cn = DriverManager.getConnection(dbUrl, dbUser, dbPass);
                             Statement smt = cn.createStatement();
                             ResultSet rs = smt.executeQuery("select * from artist_playlists");
                             out.println("<table>");
@@ -841,7 +841,7 @@
                     <%
                         try {
                             Class.forName("com.mysql.cj.jdbc.Driver");
-                            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gana_bajao", "shailesh", "");
+                            String dbUrl = System.getenv("DB_URL") != null ? System.getenv("DB_URL") : "jdbc:mysql://localhost:3306/gana_bajao"; String dbUser = System.getenv("DB_USER") != null ? System.getenv("DB_USER") : "shailesh"; String dbPass = System.getenv("DB_PASS") != null ? System.getenv("DB_PASS") : ""; Connection cn = DriverManager.getConnection(dbUrl, dbUser, dbPass);
                             Statement smt = cn.createStatement();
                             ResultSet rs = smt.executeQuery("select * from user_info");
                             out.println("<table>");
