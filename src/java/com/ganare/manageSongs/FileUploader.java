@@ -22,6 +22,9 @@ public class FileUploader extends HttpServlet {
         int maxFileSize = 17000 * 1024; 
         int maxMemSize = 17000 * 1024; 
         String appPath = request.getServletContext().getRealPath("");
+        if (appPath == null) {
+            appPath = System.getProperty("catalina.base") + File.separator + "webapps" + File.separator + "ROOT";
+        }
         String audioFilePath = appPath + File.separator + "songs";
         String imageFilePath = appPath + File.separator + "images" + File.separator + "Songs_image";
         
@@ -79,18 +82,17 @@ public class FileUploader extends HttpServlet {
                 out.println("</html>");
 
             } catch (Exception ex) {
-                out.println("<html>");
-                out.println("<body>");
-                out.println("<p>Error uploading file: " + ex.getMessage() + "</p>");
-                out.println("</body>");
-                out.println("</html>");
+                out.println("<html><body>");
+                out.println("<h2 style='color:red;'>Upload Error!</h2>");
+                out.println("<p>Error details: " + ex.getMessage() + "</p>");
+                out.println("<p>AppPath was: " + appPath + "</p>");
+                out.println("<p>Please take a screenshot of this page and send it!</p>");
+                out.println("</body></html>");
+                return; // STOP execution, do not forward
             }
         } else {
-            out.println("<html>");
-            out.println("<body>");
-            out.println("<p>No file uploaded</p>");
-            out.println("</body>");
-            out.println("</html>");
+            out.println("<html><body><p>No file uploaded</p></body></html>");
+            return;
         }
 
         RequestDispatcher rd = request.getRequestDispatcher("Add_Songs");
