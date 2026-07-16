@@ -1079,9 +1079,20 @@
                 document.querySelector('.now-playing-artist').textContent = currentTrack.artist;
                 document.querySelector('.now-playing-title').textContent = currentTrack.title;
 
-                audioPlayer.play();
-                isPlaying = true;
-                updatePlayPauseButtonIcon();
+                let playPromise = audioPlayer.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        isPlaying = true;
+                        updatePlayPauseButtonIcon();
+                    }).catch(error => {
+                        console.log("Autoplay prevented:", error);
+                        isPlaying = false;
+                        updatePlayPauseButtonIcon();
+                    });
+                } else {
+                    isPlaying = true;
+                    updatePlayPauseButtonIcon();
+                }
             }
 
             function updatePlayPauseButtonIcon() {
@@ -1119,11 +1130,24 @@
             function togglePlayPause() {
                 if (isPlaying) {
                     audioPlayer.pause();
+                    isPlaying = false;
+                    updatePlayPauseButtonIcon();
                 } else {
-                    audioPlayer.play();
+                    let playPromise = audioPlayer.play();
+                    if (playPromise !== undefined) {
+                        playPromise.then(_ => {
+                            isPlaying = true;
+                            updatePlayPauseButtonIcon();
+                        }).catch(error => {
+                            console.log("Play prevented:", error);
+                            isPlaying = false;
+                            updatePlayPauseButtonIcon();
+                        });
+                    } else {
+                        isPlaying = true;
+                        updatePlayPauseButtonIcon();
+                    }
                 }
-                isPlaying = !isPlaying;
-                updatePlayPauseButtonIcon();
             }
 
             function playPrevious() {
