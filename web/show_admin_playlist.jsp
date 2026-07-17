@@ -1,200 +1,133 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.*"%>
 <%@ page import="javax.servlet.http.HttpSession" %>
+<%
+    // Session check for admin
+    HttpSession sess = request.getSession(false);
+    if (sess == null || sess.getAttribute("email") == null) {
+        response.sendRedirect("admin_login.html");
+        return;
+    }
+    
+    String artistName = request.getParameter("artistName");
+    String artistImage = request.getParameter("artistImage");
+    
+    // Bug 22 Fix: Validate artistImage (no path traversal, only filename allowed)
+    if (artistImage != null && (artistImage.contains("/") || artistImage.contains("\\"))) {
+        artistImage = "default.png"; // Fallback if attempted traversal
+    }
+    
+    if (artistName == null) artistName = "Artist";
+    if (artistImage == null) artistImage = "default.png";
+%>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Playlist Songs</title>
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@500&display=swap');
-
-            body {
-                font-family: 'Lexend', sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #4d2a25;
-            }
-
-            .container {
-                display: block;
-            }
-
-            .titles {
-                background-color: #854a42;
-                color: white;
-                text-align: center;
-                padding: 50px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            .titles img {
-                width: 130px;
-                height: 130px;
-            }
-
-            .titles h1 {
-                padding: 50px 0 0 3px;
-                margin: 0;
-            }
-
-            .buttons {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-end;
-                gap: 15px;
-                padding-right: 20px;
-            }
-
-            .logout-button, .add-song-button {
-                padding: 12px 25px;
-                background-color: #854a42;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                font-size: 16px;
-                font-weight: bold;
-                cursor: pointer;
-                text-align: center;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-                transition: background-color 0.3s, transform 0.2s;
-            }
-
-            .logout-button:hover, .add-song-button:hover {
-                background-color: #61392f;
-                transform: translateY(-2px);
-            }
-
-            .results {
-                color: white;
-                text-align: center;
-                width: 100%;
-                margin: 20px auto;
-                border-collapse: collapse;
-            }
-
-            .results th, .results td {
-                padding: 25px 75px;
-            }
-
-            .results th {
-                background-color: #854a42;
-            }
-
-            .results tr:nth-child(even) {
-                background-color: #61392f;
-            }
-
-            .results tr:nth-child(odd) {
-                background-color: #854a42;
-            }
-
-            audio {
-                width: 250px;
-            }
-        
-            @media (max-width: 768px) {
-                .container, .form-container, .main-container { width: 95% !important; padding: 15px !important; margin: 10px auto !important; box-sizing: border-box; }
-                table { display: block; overflow-x: auto; white-space: nowrap; width: 100%; font-size: 14px; }
-                input[type='text'], input[type='email'], input[type='password'], input[type='file'], select { width: 100% !important; box-sizing: border-box; }
-                .music-player { flex-direction: column !important; padding: 10px !important; height: auto !important; }
-            }
-        </style>
-    </head>
-    <body>
-
-        <%
-            String playlistName = request.getParameter("playlistName");
-            String playlistIdStr = request.getParameter("playlistId");
-            String artistImage = request.getParameter("artistImage");
-
-            if (playlistIdStr == null) {
-                out.println("<h2 style='color:white;text-align:center;'>Playlist ID missing</h2>");
-                return;
-            }
-
-            int playlistId = Integer.parseInt(playlistIdStr);
-
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                String dbUrl = System.getenv("DB_URL") != null ? System.getenv("DB_URL") : "jdbc:mysql://localhost:3306/gana_bajao"; String dbUser = System.getenv("DB_USER") != null ? System.getenv("DB_USER") : "shailesh"; String dbPass = System.getenv("DB_PASS") != null ? System.getenv("DB_PASS") : ""; Connection cn = DriverManager.getConnection(dbUrl, dbUser, dbPass);
-
-                String sql = "SELECT s.* FROM song s "
-                        + "JOIN artist_playlist_songs ps ON s.id = ps.song_id "
-                        + "WHERE ps.playlist_id = ?";
-                PreparedStatement ps = cn.prepareStatement(sql);
-                ps.setInt(1, playlistId);
-                ResultSet rs = ps.executeQuery();
-        %>
-
-        <div class="container">
-            <div class="titles">
-                <img src="images/Songs_image/Artist_Images/<%=artistImage%>" alt="Playlist Icon" style="border: 4px solid black;">
-
-<!--                <img src="images/Songs_image/Artist_Images/<%=artistImage%>" alt="Playlist Icon">-->
-                <h1> Artist: <%= playlistName%></h1>
-
-                <div class="buttons">
-                    <form action="User_Logout" onsubmit="return confirm('Are you sure you want to logout?');">
-                        <input type="submit" value="Logout" class="logout-button">
-                    </form>
-                   
-         
-                    
-                </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaanare - Admin Playlist: <%= artistName.replace("<","&lt;").replace(">","&gt;") %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #09090b;
+            --primary-text: #ffffff;
+            --secondary-text: #a1a1aa;
+            --accent-color: #f59e0b; /* Amber accent for admin */
+            --accent-hover: #fbbf24;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Outfit', sans-serif; background: var(--primary-bg); color: var(--primary-text); min-height: 100vh; }
+        body::before {
+            content: ''; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 20% 80%, rgba(239, 68, 68, 0.2) 0%, transparent 50%);
+            z-index: -1; filter: blur(80px);
+        }
+        .top-bar {
+            display: flex; align-items: center; gap: 16px;
+            padding: 20px 30px; background: var(--glass-bg); backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky; top: 0; z-index: 100; flex-wrap: wrap;
+        }
+        .top-bar a { color: var(--accent-color); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; font-size: 14px; }
+        .top-bar h1 { font-size: 20px; flex: 1; }
+        .content { padding: 30px; max-width: 1200px; margin: 0 auto; }
+        .playlist-header { display: flex; align-items: center; gap: 20px; margin-bottom: 30px; }
+        .artist-img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent-color); }
+        .playlist-title { font-size: 32px; font-weight: 800; }
+        .playlist-subtitle { color: var(--secondary-text); margin-top: 4px; display: inline-block; padding: 4px 12px; background: rgba(245,158,11,0.2); border-radius: 20px; font-size: 12px; font-weight: 600; color: var(--accent-color); }
+        table { width: 100%; border-collapse: collapse; background: var(--glass-bg); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: 16px; overflow: hidden; }
+        th { background: rgba(245,158,11,0.15); color: var(--primary-text); padding: 16px 20px; text-align: left; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--glass-border); }
+        td { padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; vertical-align: middle; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: rgba(255,255,255,0.04); }
+        .btn-delete { color: #ef4444; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 12px; transition: 0.3s; }
+        .btn-delete:hover { background: #ef4444; color: white; }
+        @media (max-width: 768px) {
+            .top-bar { padding: 15px; } .content { padding: 15px; } .playlist-title { font-size: 24px; }
+            table { display: block; overflow-x: auto; white-space: nowrap; }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <a href="admin_home.jsp"><i class="fas fa-arrow-left"></i> Admin Dashboard</a>
+        <h1><i class="fas fa-music" style="color: var(--accent-color);"></i> Artist Songs</h1>
+    </div>
+    <div class="content">
+        <div class="playlist-header">
+            <img src="images/Artists/<%= artistImage.replace("\"", "&quot;") %>" class="artist-img" alt="Artist" onerror="this.src='images/web_images/logoGanare.png'">
+            <div>
+                <div class="playlist-title"><%= artistName.replace("<","&lt;").replace(">","&gt;") %></div>
+                <div class="playlist-subtitle">Admin View</div>
             </div>
-
-            <table class="results">
-                <thead>
-                    <tr>
-                        <th>Song Name</th>
-                        <th>Singer Name</th>
-                        <th>Language</th>
-                        <th>Release Year</th>
-                        <th>Album Name</th>
-                        <th>Play</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <%
-                        boolean hasSongs = false;
-                        while (rs.next()) {
-                            hasSongs = true;
-                    %>
-                    <tr>
-                        <td><%= rs.getString("song_name")%></td>
-                        <td><%= rs.getString("singer_name")%></td>
-                        <td><%= rs.getString("language")%></td>
-                        <td><%= rs.getString("release_year")%></td>
-                        <td><%= rs.getString("album_name")%></td>
-                        <td>
-                            <audio controls>
-                                <source src="songs/<%= rs.getString("audio_filename")%>" type="audio/mp3">
-                                Your browser does not support the audio element.
-                            </audio>
-                        </td>
-                    </tr>
-                    <%
-                        }
-                        if (!hasSongs) {
-                    %>
-                    <tr><td colspan="6" style="color: white;">No songs in this playlist.</td></tr>
-                    <%
-                        }
-                    %>
-                </tbody>
-            </table>
         </div>
 
         <%
-                cn.close();
-            } catch (Exception e) {
-                out.println("<h2 style='color:white;text-align:center;'>Error: " + e.getMessage() + "</h2>");
-            }
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                String dbUrl = System.getenv("DB_URL") != null ? System.getenv("DB_URL") : "jdbc:mysql://localhost:3306/gana_bajao";
+                String dbUser = System.getenv("DB_USER") != null ? System.getenv("DB_USER") : "shailesh";
+                String dbPass = System.getenv("DB_PASS") != null ? System.getenv("DB_PASS") : "";
+                Connection cn = DriverManager.getConnection(dbUrl, dbUser, dbPass);
+                // Secure query
+                String sql = "SELECT * FROM song WHERE singer_name = ?";
+                PreparedStatement ps = cn.prepareStatement(sql);
+                ps.setString(1, artistName);
+                ResultSet rs = ps.executeQuery();
+                boolean hasSongs = false;
         %>
-
-    </body>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th><th>Song Name</th><th>Language</th><th>Year</th><th>Album</th><th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% while (rs.next()) { hasSongs = true; 
+                    String sId = rs.getString("id");
+                    String sName = rs.getString("song_name") != null ? rs.getString("song_name").replace("<","&lt;").replace(">","&gt;") : "";
+                    String sLang = rs.getString("language") != null ? rs.getString("language") : "";
+                    String sYear = rs.getString("release_year") != null ? rs.getString("release_year") : "";
+                    String sAlbum = rs.getString("album_name") != null ? rs.getString("album_name").replace("<","&lt;").replace(">","&gt;") : "";
+                %>
+                <tr>
+                    <td style="color:var(--secondary-text);"><%= sId %></td>
+                    <td style="font-weight:600;"><%= sName %></td>
+                    <td><%= sLang %></td>
+                    <td><%= sYear %></td>
+                    <td><%= sAlbum %></td>
+                    <td><a href="Delete_Songs?id=<%= sId %>" class="btn-delete" onclick="return confirm('Delete this song from database?');"><i class="fas fa-trash"></i> Delete</a></td>
+                </tr>
+                <% } if (!hasSongs) { %>
+                <tr><td colspan="6" style="text-align:center;padding:40px;color:var(--secondary-text);">No songs found for this artist.</td></tr>
+                <% } %>
+            </tbody>
+        </table>
+        <% cn.close(); } catch (Exception e) { out.println("<div style='color:#ef4444;padding:20px;'>Error: " + e.getMessage() + "</div>"); } %>
+    </div>
+</body>
 </html>
-

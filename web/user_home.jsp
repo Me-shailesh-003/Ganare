@@ -15,7 +15,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gaanare - Where Melodies Reflect The Soul</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -26,6 +26,9 @@
 
         :root {
             --primary-bg: #09090b;
+            --secondary-bg: #18181b;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --hover-bg: rgba(255, 255, 255, 0.12);
             --primary-text: #ffffff;
             --secondary-text: #a1a1aa;
             --accent-glow: rgba(139, 92, 246, 0.6);
@@ -37,6 +40,7 @@
             --glass-bg: rgba(255, 255, 255, 0.05);
             --glass-border: rgba(255, 255, 255, 0.1);
             --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            --border-color: rgba(255, 255, 255, 0.1);
         }
 
         body {
@@ -142,7 +146,7 @@
 
         .nav-links a:hover,
         .nav-links a.active {
-            background: var(--card-bg);
+            background: var(--glass-bg);
             color: var(--primary-text);
         }
 
@@ -201,7 +205,12 @@
         }
 
         .search-select {
+            width: 130px;
+            cursor: pointer;
+            flex-shrink: 0;
         }
+
+        .search-select option { background: var(--primary-bg); }
 
         .search-select:hover {
             background: var(--hover-bg);
@@ -758,7 +767,32 @@
             }
             
             .search-container {
-                display: none; /* Hide complex search on small mobile for simplicity, or we can make it a toggle */
+                /* Bug 13 Fix: Show search on mobile as a compact row */
+                display: flex;
+                max-width: 100%;
+                margin: 0;
+                flex: 1;
+            }
+
+            .search-container form {
+                flex-wrap: nowrap;
+                gap: 6px;
+            }
+
+            .search-select {
+                width: 90px;
+                font-size: 12px;
+                padding: 8px 8px;
+            }
+
+            .search-input {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+
+            .search-btn {
+                padding: 8px 14px;
+                font-size: 12px;
             }
 
             .player-wrapper {
@@ -796,23 +830,21 @@
 
 <body>
     <%
+        // Bug 8 FIX: Use sendRedirect instead of rd.include() so page stops rendering
         try {
             session = request.getSession(false);
-            String name = (String) session.getAttribute("name");
-            String email = (String) session.getAttribute("email");
-
-            if (email != null) {
-                System.out.println("Welcome to Home");
-            } else {
-                RequestDispatcher rd = request.getRequestDispatcher("index.html");
-                rd.include(request, response);
-                out.println("<script>loginFirst();</script>");
+            if (session == null || session.getAttribute("email") == null) {
+                response.sendRedirect("index.html");
+                return;
             }
         } catch (Exception e) {
-            RequestDispatcher rd = request.getRequestDispatcher("index.html");
-            rd.include(request, response);
-            out.println("<script>loginFirst();</script>");
+            response.sendRedirect("index.html");
+            return;
         }
+        // Bug 4 FIX: Safe session name retrieval with null check
+        String displayName = (String) session.getAttribute("name");
+        if (displayName == null) displayName = "User";
+        String displayInitial = displayName.substring(0, 1).toUpperCase();
     %>
 
     <!-- Sidebar Navigation -->
@@ -857,8 +889,8 @@
 
             <div class="user-actions">
                 <div class="user-profile">
-                    <div class="user-avatar"><%= ((String) session.getAttribute("name")).substring(0, 1).toUpperCase() %></div>
-                    <span><%= session.getAttribute("name") %></span>
+                    <div class="user-avatar"><%= displayInitial %></div>
+                    <span><%= displayName %></span>
                 </div>
                 <form action="User_Logout" onsubmit="return confirm('Are you sure you want to logout?');">
                     <button type="submit" class="logout-btn">Logout</button>
@@ -868,7 +900,7 @@
 
         <!-- Welcome Banner -->
         <section class="welcome-banner" id="home">
-            <h1>Welcome back, <%= session.getAttribute("name") %></h1>
+            <h1>Welcome back, <%= displayName %></h1>
             <p>Where Melodies Reflect The Soul</p>
         </section>
 
@@ -881,8 +913,8 @@
 
             <div class="card-grid">
                 <%
+                    ArrayList<Map<String, String>> songsList = new ArrayList<>();
                     try {
-                        ArrayList<Map<String, String>> songsList = new ArrayList<>();
                         Connection cn = MyConnection.createConnection();
                         Statement smt = cn.createStatement();
                         ResultSet rs = smt.executeQuery("SELECT * FROM song");
@@ -897,16 +929,17 @@
                             songsList.add(songMap);
                 %>
 
-                <a href='user_home.jsp?id=<%=songMap.get("id")%>' class="music-card">
+                <!-- Bug 42 Fix: cards now call playSong() JS instead of page reload -->
+                <div class="music-card" onclick="playSong('<%= songMap.get("id") %>', '<%= songMap.get("songName").replace("'", "\\'") %>', '<%= songMap.get("singerName").replace("'", "\\'") %>', 'images/Songs_image/<%= songMap.get("imageFileName") %>', 'songs/<%= songMap.get("audioFileName") %>')">
                     <div class="card-image-container">
-                        <img src='images/Songs_image/<%= songMap.get("imageFileName") %>' class="card-image" alt="<%= songMap.get("songName") %>">
+                        <img src='images/Songs_image/<%= songMap.get("imageFileName") %>' class="card-image" alt="<%= songMap.get("songName") %>" onerror="this.src='images/web_images/logoGanare.png'">
                         <div class="play-overlay">
                             <i class="fas fa-play"></i>
                         </div>
                     </div>
                     <div class="card-title"><%= songMap.get("songName") %></div>
                     <div class="card-subtitle"><%= songMap.get("singerName") %></div>
-                </a>
+                </div>
 
                 <%
                         }
@@ -915,7 +948,7 @@
                         smt.close();
                         cn.close();
                     } catch (Exception e) {
-                        out.println(e.getMessage());
+                        out.println("<p style='color: var(--secondary-text); padding: 20px;'>Unable to load songs: " + e.getMessage() + "</p>");
                     }
                 %>
             </div>
@@ -1087,14 +1120,14 @@
                 </div>
                 <div class="footer-section">
                     <h3>Contact Us</h3>
-                    <p>Phone: +91-00344334</p>
                     <p><a href="mailto:meshailesh003@gmail.com">meshailesh003@gmail.com</a></p>
+                    <p><a href="https://www.instagram.com/me_shailesh_003">@me_shailesh_003</a></p>
                 </div>
                 <div class="footer-section">
                     <h3>Follow Us</h3>
                     <div class="social-links">
-                        <a href="mailto:meshailesh003@gmail.com"><i class="fas fa-envelope"></i></a>
-                        <a href="https://www.instagram.com/me_shailesh_003?igsh=OG8xc25lc3piZmJ0"><i class="fab fa-instagram"></i></a>
+                        <a href="mailto:meshailesh003@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+                        <a href="https://www.instagram.com/me_shailesh_003?igsh=OG8xc25lc3piZmJ0" title="Instagram"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
@@ -1104,205 +1137,212 @@
         </footer>
     </main>
 
-    <!-- Music Player -->
-    <%
-        try {
-            String songId = request.getParameter("id");
-            if (songId != null) {
-                System.out.println("Song ID: " + songId);
-                Connection cn = MyConnection.createConnection();
-                Statement smt = cn.createStatement();
-                ResultSet rs = smt.executeQuery("SELECT * FROM song WHERE id = " + songId);
-
-                if (rs.next()) {
-                    String songName = rs.getString(2);
-                    String singerName = rs.getString(3);
-                    String imageFileName = rs.getString(7);
-                    String audioFileName = rs.getString(8);
-    %>
-
-    <div class="music-player">
+    <!-- Always-On Music Player (Bug 3 Fix) -->
+    <div class="music-player" id="musicPlayer" style="display: none;">
         <div class="player-wrapper">
             <div class="now-playing">
-                <img src='images/Songs_image/<%= imageFileName%>' alt="Now Playing" class="now-playing-image">
+                <img src="" alt="Now Playing" class="now-playing-image" id="playerImg">
                 <div class="now-playing-info">
-                    <div class="now-playing-title"><%= songName %></div>
-                    <div class="now-playing-artist"><%= singerName %></div>
+                    <div class="now-playing-title" id="playerTitle">No song selected</div>
+                    <div class="now-playing-artist" id="playerArtist">-</div>
                 </div>
+                <!-- Bug 40 Fix: Like button with toggle functionality -->
+                <button class="control-btn" id="likeBtn" title="Like" onclick="toggleLike()" style="margin-left: 12px;">
+                    <i class="far fa-heart" id="likeIcon"></i>
+                </button>
             </div>
 
             <div class="player-controls-center">
                 <div class="player-buttons">
-                    <button class="control-btn shuffle-btn"><i class="fas fa-random"></i></button>
-                    <button class="control-btn prev-button"><i class="fas fa-step-backward"></i></button>
-                    <button class="control-btn play-pause play-pause-button"><i class="fas fa-play"></i></button>
-                    <button class="control-btn next-button"><i class="fas fa-step-forward"></i></button>
-                    <button class="control-btn loop-button"><i class="fas fa-redo"></i></button>
+                    <!-- Bug 39 Fix: Shuffle button with working JS -->
+                    <button class="control-btn" id="shuffleBtn" title="Shuffle" onclick="toggleShuffle()">
+                        <i class="fas fa-random"></i>
+                    </button>
+                    <button class="control-btn prev-button" onclick="playPrevious()">
+                        <i class="fas fa-step-backward"></i>
+                    </button>
+                    <button class="control-btn play-pause play-pause-button" onclick="togglePlayPause()">
+                        <i class="fas fa-play" id="playPauseIcon"></i>
+                    </button>
+                    <button class="control-btn next-button" onclick="playNext()">
+                        <i class="fas fa-step-forward"></i>
+                    </button>
+                    <button class="control-btn loop-button" id="loopBtn" title="Loop" onclick="toggleLoop()">
+                        <i class="fas fa-redo"></i>
+                    </button>
                 </div>
                 <div class="progress-container">
-                    <span class="time-current" style="color: var(--secondary-text); font-size: 12px;">0:00</span>
-                    <input type="range" class="progress-bar" value="0" max="100">
-                    <span class="time-total" style="color: var(--secondary-text); font-size: 12px;">0:00</span>
+                    <span class="time-current" id="timeCurrent">0:00</span>
+                    <input type="range" class="progress-bar" id="progressBar" value="0" max="100" oninput="seekTo()">
+                    <span class="time-total" id="timeTotal">0:00</span>
                 </div>
             </div>
 
             <div class="player-extras">
-                <a href='Download_Songs?audioName="<%= audioFileName%>"' class="control-btn" title="Download">
+                <!-- Bug 14 Fix: Download URL without extra quotes -->
+                <a href="#" class="control-btn" id="downloadBtn" title="Download" download>
                     <i class="fas fa-download"></i>
                 </a>
-                <button class="control-btn" title="Add to playlist"><i class="fas fa-plus"></i></button>
-                <button class="control-btn" title="Like"><i class="far fa-heart"></i></button>
+                <!-- Bug 41 Fix: Add to Playlist button -->
+                <button class="control-btn" title="Add to playlist" onclick="addCurrentToPlaylist()">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <i class="fas fa-volume-up" style="color:var(--secondary-text);font-size:14px;"></i>
+                    <input type="range" id="volumeBar" min="0" max="100" value="80" style="width:80px;height:4px;" oninput="setVolume()">
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Hidden Audio Element -->
+    <audio id="audioPlayer"></audio>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const audioPlayer = new Audio();
-            const playPauseButton = document.querySelector('.play-pause-button');
-            const prevButton = document.querySelector('.prev-button');
-            const nextButton = document.querySelector('.next-button');
-            const loopButton = document.querySelector('.loop-button');
-            const progressBar = document.querySelector('.progress-bar');
-            const timeCurrent = document.querySelector('.time-current');
-            const timeTotal = document.querySelector('.time-total');
+        // ========== TRACK LIST (Bug 5 Fix: null check) ==========
+        const trackList = [
+        <%
+            ArrayList<Map<String, String>> songsList = (ArrayList<Map<String, String>>) session.getAttribute("songsList");
+            if (songsList != null) {
+                for (Map<String, String> song : songsList) {
+                    String sName = song.get("songName") != null ? song.get("songName").replace("'", "\\'").replace("\"", "\\\"") : "";
+                    String sArtist = song.get("singerName") != null ? song.get("singerName").replace("'", "\\'") : "";
+        %>
+            {id:'<%= song.get("id") %>',title:'<%= sName %>',artist:'<%= sArtist %>',source:'songs/<%= song.get("audioFileName") %>',image:'images/Songs_image/<%= song.get("imageFileName") %>'},
+        <% } } %>
+        ];
 
-            let isPlaying = false;
-            var currentTrackIndex = 0;
+        let currentTrackIndex = 0;
+        let isPlaying = false;
+        let isShuffle = false;
+        let isLoop = false;
+        let isLiked = false;
+        const audioEl = document.getElementById('audioPlayer');
 
-            <%
-                ArrayList<Map<String, String>> songsList = (ArrayList<Map<String, String>>) session.getAttribute("songsList");
-            %>
-            const trackList = [
-            <% for (Map<String, String> song : songsList) {%>
-                {id: '<%= song.get("id")%>', artist: '<%= song.get("singerName")%>', title: '<%= song.get("songName")%>', source: 'songs/<%= song.get("audioFileName")%>', image: 'images/Songs_image/<%= song.get("imageFileName")%>'},
-            <% }%>
-            ];
+        // ========== MAIN PLAY FUNCTION (Bug 3 Fix) ==========
+        function playSong(id, title, artist, image, source) {
+            // Show player
+            document.getElementById('musicPlayer').style.display = 'block';
 
-            const userSongId = '<%= songId%>';
-            const songIndex = trackList.findIndex(track => track.id === userSongId);
+            // Find track in list
+            const idx = trackList.findIndex(t => t.id === id);
+            if (idx !== -1) currentTrackIndex = idx;
 
-            if (songIndex !== -1) {
-                currentTrackIndex = songIndex;
-            }
+            // Update player UI
+            document.getElementById('playerTitle').textContent = title;
+            document.getElementById('playerArtist').textContent = artist;
+            document.getElementById('playerImg').src = image;
 
-            loadTrack();
+            // Bug 14 Fix: download link without extra quotes
+            document.getElementById('downloadBtn').href = 'Download_Songs?audioName=' + encodeURIComponent(source.replace('songs/', ''));
 
-            function loadTrack() {
-                const currentTrack = trackList[currentTrackIndex];
-                audioPlayer.src = currentTrack.source;
+            // Load and play
+            audioEl.src = source;
+            audioEl.play().then(() => {
+                isPlaying = true;
+                document.getElementById('playPauseIcon').className = 'fas fa-pause';
+            }).catch(err => {
+                console.log('Autoplay blocked:', err);
+            });
+        }
 
-                document.querySelector('.now-playing-image').src = currentTrack.image;
-                document.querySelector('.now-playing-artist').textContent = currentTrack.artist;
-                document.querySelector('.now-playing-title').textContent = currentTrack.title;
+        function loadTrack() {
+            const t = trackList[currentTrackIndex];
+            if (t) playSong(t.id, t.title, t.artist, t.image, t.source);
+        }
 
-                let playPromise = audioPlayer.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(_ => {
-                        isPlaying = true;
-                        updatePlayPauseButtonIcon();
-                    }).catch(error => {
-                        console.log("Autoplay prevented:", error);
-                        isPlaying = false;
-                        updatePlayPauseButtonIcon();
-                    });
-                } else {
+        function togglePlayPause() {
+            if (isPlaying) {
+                audioEl.pause();
+                isPlaying = false;
+                document.getElementById('playPauseIcon').className = 'fas fa-play';
+            } else {
+                audioEl.play().then(() => {
                     isPlaying = true;
-                    updatePlayPauseButtonIcon();
-                }
+                    document.getElementById('playPauseIcon').className = 'fas fa-pause';
+                }).catch(e => console.log(e));
             }
+        }
 
-            function updatePlayPauseButtonIcon() {
-                const icon = playPauseButton.querySelector('i');
-                if (isPlaying) {
-                    icon.className = 'fas fa-pause';
-                } else {
-                    icon.className = 'fas fa-play';
-                }
-            }
-
-            function formatTime(seconds) {
-                const mins = Math.floor(seconds / 60);
-                const secs = Math.floor(seconds % 60);
-                return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-            }
-
-            playPauseButton.addEventListener('click', togglePlayPause);
-            prevButton.addEventListener('click', playPrevious);
-            nextButton.addEventListener('click', playNext);
-            loopButton.addEventListener('click', toggleLoop);
-            progressBar.addEventListener('input', updateProgressBar);
-
-            audioPlayer.addEventListener('timeupdate', function() {
-                const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-                progressBar.value = progress;
-                timeCurrent.textContent = formatTime(audioPlayer.currentTime);
-                timeTotal.textContent = formatTime(audioPlayer.duration);
-            });
-
-            audioPlayer.addEventListener('ended', function () {
-                playNext();
-            });
-
-            function togglePlayPause() {
-                if (isPlaying) {
-                    audioPlayer.pause();
-                    isPlaying = false;
-                    updatePlayPauseButtonIcon();
-                } else {
-                    let playPromise = audioPlayer.play();
-                    if (playPromise !== undefined) {
-                        playPromise.then(_ => {
-                            isPlaying = true;
-                            updatePlayPauseButtonIcon();
-                        }).catch(error => {
-                            console.log("Play prevented:", error);
-                            isPlaying = false;
-                            updatePlayPauseButtonIcon();
-                        });
-                    } else {
-                        isPlaying = true;
-                        updatePlayPauseButtonIcon();
-                    }
-                }
-            }
-
-            function playPrevious() {
-                currentTrackIndex = (currentTrackIndex - 1 + trackList.length) % trackList.length;
-                loadTrack();
-            }
-
-            function playNext() {
+        function playNext() {
+            if (isShuffle) {
+                currentTrackIndex = Math.floor(Math.random() * trackList.length);
+            } else {
                 currentTrackIndex = (currentTrackIndex + 1) % trackList.length;
-                loadTrack();
             }
+            loadTrack();
+        }
 
-            function toggleLoop() {
-                audioPlayer.loop = !audioPlayer.loop;
-                loopButton.style.color = audioPlayer.loop ? 'var(--accent-color)' : 'var(--secondary-text)';
-            }
+        function playPrevious() {
+            currentTrackIndex = (currentTrackIndex - 1 + trackList.length) % trackList.length;
+            loadTrack();
+        }
 
-            function updateProgressBar() {
-                const progress = progressBar.value / 100;
-                audioPlayer.currentTime = progress * audioPlayer.duration;
-            }
+        // Bug 39 Fix: Shuffle toggle
+        function toggleShuffle() {
+            isShuffle = !isShuffle;
+            const btn = document.getElementById('shuffleBtn');
+            btn.style.color = isShuffle ? 'var(--accent-color)' : 'var(--secondary-text)';
+        }
 
-            // Smooth scroll for navigation
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        
-                // Update active nav link
-                        document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
-                        this.classList.add('active');
-                        
-                        // Close mobile menu if open
-                        document.querySelector('.sidebar').classList.remove('active');
-                    }
-                });
+        function toggleLoop() {
+            isLoop = !isLoop;
+            audioEl.loop = isLoop;
+            const btn = document.getElementById('loopBtn');
+            btn.style.color = isLoop ? 'var(--accent-color)' : 'var(--secondary-text)';
+        }
+
+        // Bug 40 Fix: Like toggle
+        function toggleLike() {
+            isLiked = !isLiked;
+            document.getElementById('likeIcon').className = isLiked ? 'fas fa-heart' : 'far fa-heart';
+            document.getElementById('likeIcon').style.color = isLiked ? '#ef4444' : 'var(--secondary-text)';
+        }
+
+        // Bug 41 Fix: Add to playlist button
+        function addCurrentToPlaylist() {
+            alert('To add a song to a playlist, go to My Playlists and click "Add New Song".');
+        }
+
+        function setVolume() {
+            audioEl.volume = document.getElementById('volumeBar').value / 100;
+        }
+
+        function seekTo() {
+            const progress = document.getElementById('progressBar').value / 100;
+            audioEl.currentTime = progress * audioEl.duration;
+        }
+
+        function formatTime(secs) {
+            if (isNaN(secs)) return '0:00';
+            const m = Math.floor(secs / 60);
+            const s = Math.floor(secs % 60);
+            return m + ':' + (s < 10 ? '0' : '') + s;
+        }
+
+        audioEl.addEventListener('timeupdate', () => {
+            const progress = (audioEl.currentTime / audioEl.duration) * 100 || 0;
+            document.getElementById('progressBar').value = progress;
+            document.getElementById('timeCurrent').textContent = formatTime(audioEl.currentTime);
+            document.getElementById('timeTotal').textContent = formatTime(audioEl.duration);
+        });
+
+        audioEl.addEventListener('ended', playNext);
+
+        // Volume initialize
+        audioEl.volume = 0.8;
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
+                    this.classList.add('active');
+                    document.querySelector('.sidebar').classList.remove('active');
+                }
             });
         });
 
@@ -1310,16 +1350,5 @@
             document.querySelector('.sidebar').classList.toggle('active');
         }
     </script>
-
-    <%
-                }
-                rs.close();
-                smt.close();
-                cn.close();
-            }
-        } catch (Exception e) {
-            out.println(e.getMessage());
-        }
-    %>
 </body>
 </html>

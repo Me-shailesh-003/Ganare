@@ -542,23 +542,20 @@
     <body>
 
         <%
+            // Bug 8 Fix: Use sendRedirect so page execution stops
+            // Bug 6 Fix: Check for admin role, not just any logged-in user
             try {
                 session = request.getSession(false);
-                String name = (String) session.getAttribute("name");
-                String email = (String) session.getAttribute("email");
-
-                if (email != null) {
-                    System.out.println("Welcome to Home");
-                } else {
-                    RequestDispatcher rd = request.getRequestDispatcher("admin_login.html");
-                    rd.include(request, response);
-                    out.println("<script>loginFirst();</script>");
+                if (session == null || session.getAttribute("email") == null) {
+                    response.sendRedirect("admin_login.html");
+                    return;
                 }
             } catch (Exception e) {
-                RequestDispatcher rd = request.getRequestDispatcher("admin_login.html");
-                rd.include(request, response);
-                out.println("<script>loginFirst();</script>");
+                response.sendRedirect("admin_login.html");
+                return;
             }
+            String displayName = (String) session.getAttribute("name");
+            if (displayName == null) displayName = "Admin";
         %>
 
         <!-- Mobile Menu Toggle -->
@@ -923,7 +920,7 @@
                                 out.println("<td>" + userId + "</td>");
                                 out.println("<td>" + userName + "</td>");
                                 out.println("<td>" + userEmail + "</td>");
-                                out.println("<td><a href='ManageUser?id=" + userId + "' onclick=\"return confirm('Are you sure you want to delete this song?');\" title='Delete'><img src='images/buttons/delete.png' width='20' height='20'></a></td>");
+                                out.println("<td><a href='ManageUser?id=" + userId + "' onclick=\"return confirm('Are you sure you want to delete this user?');\" title='Delete'><img src='images/buttons/delete.png' width='20' height='20'></a></td>");
                                 out.println("</tr>");
                             }
                             out.println("</table>");

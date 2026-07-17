@@ -236,6 +236,34 @@
             }
         }
     </style>
+    <script>
+        function checkPasswords() {
+            const pwd = document.getElementById('pwd').value;
+            const pwd2 = document.getElementById('pwd2').value;
+            const msg = document.getElementById('pwd-match-msg');
+            if (pwd2.length === 0) { msg.textContent = ''; return; }
+            if (pwd === pwd2) {
+                msg.textContent = '✓ Passwords match';
+                msg.style.color = '#10b981';
+            } else {
+                msg.textContent = '✗ Passwords do not match';
+                msg.style.color = '#ef4444';
+            }
+        }
+        function validateForm() {
+            const pwd = document.getElementById('pwd').value;
+            const pwd2 = document.getElementById('pwd2').value;
+            if (pwd !== pwd2) {
+                alert('Passwords do not match! Please re-enter your password.');
+                return false;
+            }
+            if (pwd.length < 8) {
+                alert('Password must be at least 8 characters long.');
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 <body>
 
@@ -262,38 +290,54 @@
             </div>
 
             <div class="form-group full-width">
-                <label for="pwd">Password</label>
-                <input type="password" id="pwd" name="pwd" placeholder="Create a strong password" required>
+                <label for="pwd">Password <span style="color: var(--secondary-text); font-size: 12px;">(min. 8 characters)</span></label>
+                <input type="password" id="pwd" name="pwd" placeholder="Create a strong password" required minlength="8">
+            </div>
+
+            <!-- Bug 35 Fix: Password confirmation field -->
+            <div class="form-group full-width">
+                <label for="pwd2">Confirm Password</label>
+                <input type="password" id="pwd2" name="pwd2" placeholder="Re-enter your password" required minlength="8" oninput="checkPasswords()">
+                <span id="pwd-match-msg" style="font-size: 12px; margin-top: 4px; display: block;"></span>
             </div>
 
             <div class="form-group">
                 <label for="mob">Phone Number</label>
-                <input type="text" id="mob" name="mob" placeholder="Your phone number" required>
+                <!-- Bug fixes: type tel, maxlength, pattern for 10-digit validation -->
+                <input type="tel" id="mob" name="mob" placeholder="10-digit phone number" required maxlength="10" pattern="[0-9]{10}" title="Enter a 10-digit phone number">
             </div>
 
             <div class="form-group">
                 <label for="age">Age</label>
-                <input type="number" id="age" name="age" placeholder="Your age" required>
+                <!-- Bug fix: Added min/max age validation -->
+                <input type="number" id="age" name="age" placeholder="Your age" required min="8" max="120">
             </div>
 
             <div class="form-group">
                 <label for="lang">Preferred Language</label>
+                <!-- Bug 36 Fix: Added all available language options -->
                 <select id="lang" name="lang" required>
+                    <option value="" disabled selected>-- Select Language --</option>
                     <option value="hindi">Hindi</option>
                     <option value="english">English</option>
+                    <option value="punjabi">Punjabi</option>
+                    <option value="bhojpuri">Bhojpuri</option>
+                    <option value="other">Other</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="gender">Gender</label>
+                <!-- Bug 37 Fix: Added empty placeholder so user must actively choose -->
                 <select id="gender" name="gender" required>
+                    <option value="" disabled selected>-- Select Gender --</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
-                    <option value="other">Other</option>
+                    <option value="other">Other / Prefer not to say</option>
                 </select>
             </div>
 
-            <button type="submit">Sign Up</button>
+            <button type="submit" onclick="return validateForm()">Sign Up</button>
 
             <div class="back-login">
                 Already have an account? <a href="index.html#login">Log in here</a>
