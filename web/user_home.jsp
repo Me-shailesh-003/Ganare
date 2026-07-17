@@ -1202,9 +1202,9 @@
         // ========== TRACK LIST (Bug 5 Fix: null check) ==========
         const trackList = [
         <%
-            ArrayList<Map<String, String>> songsList = (ArrayList<Map<String, String>>) session.getAttribute("songsList");
-            if (songsList != null) {
-                for (Map<String, String> song : songsList) {
+            ArrayList<Map<String, String>> sessionSongsList = (ArrayList<Map<String, String>>) session.getAttribute("songsList");
+            if (sessionSongsList != null) {
+                for (Map<String, String> song : sessionSongsList) {
                     String sName = song.get("songName") != null ? song.get("songName").replace("'", "\\'").replace("\"", "\\\"") : "";
                     String sArtist = song.get("singerName") != null ? song.get("singerName").replace("'", "\\'") : "";
         %>
